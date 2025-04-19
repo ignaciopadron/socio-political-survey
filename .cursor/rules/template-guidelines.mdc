@@ -1,0 +1,21 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: "Guía de plantillas Go + tailwind"
+globs: ["templates/**"]
+alwaysApply: false
+---
+
+Usa {{define "base"}} como layout principal.
+
+El head incluye sólo tailwind.min.css vía CDN; nada de frameworks JS.
+
+Cada página hereda de base con {{template "base" .}}.
+
+Todas las etiquetas deben pasar WAI‑ARIA según el validador.
+
+Usa componentes atómicos (btn, card, alert) con utilidades Tailwind.
+
