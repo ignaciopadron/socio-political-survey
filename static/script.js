@@ -395,8 +395,8 @@ function displayCategories(categories) {
             }
 
             categoryElement.innerHTML = `
-                <h3 class="mb-3">${category.profile}</h3> {/* Usar profile */} 
-                <p>${category.description}</p> {/* Usar description */} 
+                <h3 class="mb-3">${category.profile}</h3>
+                <p>${category.description}</p>
                 <h4 class="mt-4">Pensadores Cercanos</h4>
                 <div class="row">${thinkersHtml}</div>
                 <h4 class="mt-4">Políticos Cercanos</h4>
