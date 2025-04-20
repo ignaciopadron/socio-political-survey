@@ -1,2 +1,3 @@
-.cursor/rules/*
-static/img/*
+
+static/img/
+.cursor/
