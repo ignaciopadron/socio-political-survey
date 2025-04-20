@@ -1,5 +1,61 @@
+/* Colores personalizados */
+:root {
+  --brand-bg: #8B4A52;
+  --brand-text: #718E7E;
+  --brand-contrast: #FFFFFF; /* Color para texto sobre fondo oscuro */
+}
+
 body {
     padding-top: 56px; /* Ajuste para la barra de navegación fija si la usas */
+    background-color: var(--brand-bg);
+    color: var(--brand-contrast); /* Color de texto por defecto */
+}
+
+/* Títulos y texto principal */
+h1, h2, h3, h4, h5, h6, .lead {
+    color: var(--brand-text);
+}
+/* Cambiar color de texto sobre fondo claro si es necesario, por ejemplo en cards blancas */
+/* .card, .bg-light, etc { color: var(--brand-text); } */
+
+/* Enlaces */
+a {
+    color: var(--brand-text);
+}
+a:hover {
+    color: color-mix(in srgb, var(--brand-text) 80%, black); /* Oscurecer un poco en hover */
+}
+
+/* Botones Primarios */
+.btn-primary {
+    background-color: var(--brand-text);
+    border-color: var(--brand-text);
+    color: var(--brand-contrast); /* Asegurar contraste */
+}
+.btn-primary:hover {
+    background-color: color-mix(in srgb, var(--brand-text) 80%, black);
+    border-color: color-mix(in srgb, var(--brand-text) 70%, black);
+}
+.btn-outline-primary {
+    color: var(--brand-text);
+    border-color: var(--brand-text);
+}
+.btn-outline-primary:hover {
+    background-color: var(--brand-text);
+    border-color: var(--brand-text);
+    color: var(--brand-contrast);
+}
+
+/* Barra de navegación */
+.navbar.bg-dark { /* Sobrescribir clase específica usada en el HTML */
+    background-color: var(--brand-text) !important; /* Usar !important si es necesario para sobrescribir Bootstrap */
+}
+/* Ajustar color del texto de la navbar si es necesario */
+.navbar-dark .navbar-brand, .navbar-dark .navbar-nav .nav-link {
+     color: var(--brand-contrast);
+}
+.navbar-dark .navbar-brand:hover, .navbar-dark .navbar-nav .nav-link:hover {
+     color: color-mix(in srgb, var(--brand-contrast) 80%, black);
 }
 
 .affirmation-button {
@@ -9,6 +65,18 @@ body {
     min-height: 80px; /* Altura mínima para botones */
     display: flex; /* Para centrar verticalmente si es necesario */
     align-items: center;
+    /* Estilos para fondo blanco y texto negro */
+    background-color: #FFFFFF !important; /* Fondo blanco, sobrescribe Bootstrap */
+    color: #000000 !important; /* Texto negro, sobrescribe Bootstrap */
+    border: 5px solid transparent !important; /* Borde inicial transparente */
+    box-shadow: none !important; /* Quitar sombra de botón si existe */
+    transition: border-color 0.25s ease-in-out; /* Transición suave para el borde */
+}
+
+.affirmation-button:hover {
+    background-color: #FFFFFF !important; /* Mantener fondo blanco en hover */
+    color: #000000 !important; /* Mantener texto negro en hover */
+    border-color: var(--brand-text) !important; /* Aplicar borde verde en hover */
 }
 
 /* Estilos para el gráfico tipo brújula */
@@ -18,7 +86,7 @@ body {
     margin: 0 auto; /* Centrar el contenedor */
     aspect-ratio: 1 / 1; /* Mantiene el contenedor cuadrado */
     position: relative; /* Base para posicionamiento absoluto de hijos */
-    border: 1px solid #ccc;
+    border: 5px solid #ccc;
     background-color: #f8f9fa;
 }
 
@@ -64,27 +132,92 @@ body {
     display: none;
 }
 
-.card-body {
-    height: auto !important;
-    overflow: visible !important;
+/* --- Clases para tarjetas de personas --- */
+.person-card {
+    cursor: pointer;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+    border: 2px solid transparent;
+    background-color: #FFFFFF;
+    color: #000000;
+    display: flex; /* Añadido para asegurar que la tarjeta sea flex container */
+    flex-direction: column; /* Asegura dirección columna para imagen y card-body */
 }
 
-.card-text {
-    white-space: normal !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
+/* --- MODIFICADO: Asegurar tamaño uniforme y VISIBILIDAD COMPLETA de imágenes --- */
+.person-card .card-img-top {
+    width: 100%;
+    height: 200px; /* Mantiene la ALTURA FIJA */
+    /* --- CAMBIO CLAVE: cover -> contain --- */
+    object-fit: contain; /* Escala la imagen para que quepa ENTERA */
+    /* --- FIN CAMBIO CLAVE --- */
+    object-position: center center; /* Centra la imagen en los huecos */
+    background-color: #f8f9fa; /* Añade un fondo gris claro para los huecos */
+    flex-shrink: 0; /* Evita que la imagen se encoja */
+}
+
+/* Card Body específico para personas */
+.person-card .card-body {
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;          /* AÑADIDO: Permite que el card-body ocupe el espacio restante */
+    padding: var(--bs-card-spacer-y, 1rem) var(--bs-card-spacer-x, 1rem); /* Padding estándar */
+    /* QUITAR height: 100%; si se usa flex-grow: 1 */
+}
+
+.person-card .card-title {
+    color: #000000;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    /* border-color: var(--brand-text); /* Esto estaba mal aquí, quitar */
+}
+
+.person-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+    border-color: var(--brand-text); /* Borde verde en hover (en la tarjeta) */
+}
+
+/* Texto truncado específico */
+.truncated {
+   overflow: hidden;          /* Fundamental para cortar */
+   text-overflow: ellipsis;   /* Añade los puntos suspensivos */
+   display: -webkit-box;
+   -webkit-line-clamp: 3;
+   -webkit-box-orient: vertical;
+   line-height: 1.4em;
+   max-height: calc(1.4em * 3); /* Límite estricto */
+   margin-bottom: 1rem;       /* Espacio antes del botón */
+   white-space: normal; /* Asegurar que no hereda nowrap */
+}
+
+/* Asegurar que el texto dentro del modal sea legible */
+#personModal .modal-body #personModalText {
+    color: #212529; /* Color de texto oscuro estándar de Bootstrap */
+    /* O puedes usar 'initial' o 'black' si prefieres */
 }
 
 /* El párrafo tiene por defecto una altura máxima (por ejemplo, 60px) y se trunca el contenido */
+/* Ya no se usa con el modal, se reemplaza por .truncated
 .truncated-text {
-    max-height: 60px;            /* Altura del preview */
-    overflow: hidden;            /* Oculta el contenido extra */
+    max-height: 60px;            
+    overflow: hidden;            
     transition: max-height 0.3s ease;
-    cursor: pointer;             /* Indica que se puede hacer click */
-  }
-  
-  /* Cuando se expande, se quita la limitación de la altura */
-  .truncated-text.expanded {
-    max-height: none;            /* Se muestra el contenido completo */
-  }
+    cursor: pointer;             
+}
+
+.truncated-text.expanded {
+    max-height: none;            
+}
+*/
+
+/* --- REGLA PARA BOTÓN ELIMINADA O MODIFICADA --- */
+/* Ya no se usa posicionamiento absoluto.
+   Se usará la clase .mt-auto de Bootstrap en el HTML para empujar el botón abajo.
+   Opcionalmente, se podría añadir align-self aquí si no se usa en la clase HTML.
+.person-card .card-body button {
+    margin-top: auto; 
+    align-self: flex-start; 
+}
+*/
   
