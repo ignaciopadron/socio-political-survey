@@ -14,7 +14,6 @@ Esta aplicación presenta una encuesta de 14 preguntas diseñadas para evaluar t
 - [🚀 Uso](#-uso)
 - [🔌 API Endpoints](#-api-endpoints)
 - [🤝 Contribuciones](#-contribuciones)
-- [🪪 Licencia](#-licencia)
 
 ## ✨ Características
 
