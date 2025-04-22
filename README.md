@@ -18,7 +18,7 @@ Esta aplicación presenta una encuesta de 14 preguntas diseñadas para evaluar t
 ## ✨ Características
 
 -   **Encuesta Interactiva:** 14 pares de afirmaciones para evaluar tu posición.
--   **Aleatorización:** El orden de las preguntas y la posición de las afirmaciones (izquierda/derecha) se mezclan en cada sesión.
+-   **Aleatorización:** El orden de las preguntas y la posición de las afirmaciones se mezclan en cada sesión.
 -   **Cálculo de Resultados:** Puntuaciones numéricas en los ejes Realismo-Idealismo (RI) y Soberanismo-Globalismo (SG).
 -   **Perfiles Detallados:** Asignación a uno de los cuatro perfiles:
     -   Realista-Soberanista
@@ -47,7 +47,7 @@ La aplicación utiliza una arquitectura simple:
 
 1.  Clona el repositorio:
     ```bash
-    git clone <URL_DEL_REPOSITORIO>
+    git clone https://github.com/ignaciopadron/socio-political-survey
     cd socio-political-survey
     ```
 2.  Ejecuta la aplicación:
