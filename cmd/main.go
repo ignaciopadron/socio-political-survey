@@ -457,7 +457,11 @@ func main() {
 			http.NotFound(w, r)
 			return
 		}
+		// Medir tiempo de ServeFile
+		start := time.Now()
 		http.ServeFile(w, r, "templates/index.html")
+		duration := time.Since(start)
+		fmt.Printf("DEBUG: ServeFile('/') tomó %v\n", duration)
 	})
 
 	http.HandleFunc("/api/questions", questionsHandler)

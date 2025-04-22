@@ -10,8 +10,6 @@ body {
     /* background-color: var(--brand-bg); */ /* Se reemplaza por el gradiente */
     --brand-bg-darker: color-mix(in srgb, var(--brand-bg) 85%, black); /* Definir un tono más oscuro */
     background-image:
-        /* Capa superior: Brújula */
-        url('/static/img/radar_dragon.png'),
         /* Capa siguiente: Patrón de triángulos difuminados */
         linear-gradient(315deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
         linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
@@ -20,8 +18,6 @@ body {
         /* Capa inferior: Gradiente vertical */
         linear-gradient(to bottom, var(--brand-bg), var(--brand-bg-darker));
     background-size:
-        /* Tamaño para la brújula (ajustar si es necesario) */
-        350px auto,
         /* Tamaño para el patrón de triángulos */
         20px 20px, /* tamaño 1 */
         20px 20px, /* tamaño 2 */
@@ -30,8 +26,6 @@ body {
         /* Tamaño para el gradiente vertical */
         auto;
    background-position:
-        /* Posición Brújula: centrada horizontal, 95% desde arriba */
-        center 95%,
         /* Posición Patrón Triángulos (repetir desde esquina sup-izq) */
         0 0, /* pos 1 */
         0 0, /* pos 2 */
@@ -40,8 +34,6 @@ body {
         /* Posición Gradiente */
         0 0;
    background-repeat:
-        /* Brújula: no repetir */
-        no-repeat,
         /* Patrón Triángulos: repetir */
         repeat, /* repeat 1 */
         repeat, /* repeat 2 */

@@ -1,42 +1,51 @@
-# Etapa 1: Construcción
-FROM golang:1.22-alpine AS builder
+# Etapa 1: Build
+FROM golang:1.24.2-alpine AS builder
 
-# Establecer directorio de trabajo
+# Metadata y argumentos
+ARG VERSION=1.0.0
+LABEL org.opencontainers.image.version=$VERSION
+
+# Crear user en build para permisos coherentes
+RUN addgroup -g 10001 radar \
+  && adduser -D -u 10001 -G radar radar
+
 WORKDIR /app
 
-# Copiar archivos de módulos y descargar dependencias
-# Copiar primero estos archivos aprovecha el cache de Docker
-COPY go.mod go.sum ./
-RUN go mod download
+# Dependencias (cache)
+COPY go.mod ./
+RUN apk add --no-cache ca-certificates \
+  && go mod download
 
-# Copiar el resto del código fuente
+# Código fuente
 COPY . .
 
-# Compilar la aplicación
-# -o /app/main especifica el nombre del archivo de salida
-# ./cmd/main.go es la ruta a tu archivo principal
-# CGO_ENABLED=0 crea un binario estático (recomendado para contenedores)
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app/main ./cmd/main.go
+# Compilar binario estático sin símbolos
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo \
+      -ldflags="-s -w" \
+      -o radar ./cmd/main.go
 
-# Etapa 2: Ejecución
-FROM alpine:latest
+# Etapa 2: Runtime mínimo
+FROM scratch AS runtime
 
-# Instalar certificados CA (necesario para peticiones HTTPS si las hubiera)
-RUN apk --no-cache add ca-certificates
+# Copiar certificados para HTTPS
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
-# Establecer directorio de trabajo
+# Mantener mismo usuario
+USER 10001:10001
 WORKDIR /app
 
-# Copiar el binario compilado desde la etapa de construcción
-COPY --from=builder /app/main .
+# Copiar binario y assets
+COPY --from=builder /app/radar .
+COPY --from=builder /app/static ./static
+COPY --from=builder /app/templates ./templates
 
-# Copiar directorios estáticos y de plantillas
-# Asegúrate de que estas rutas coincidan con la estructura de tu proyecto
-COPY static ./static
-COPY templates ./templates
+# Metadatos finales
+LABEL org.opencontainers.image.title="radar"
+LABEL org.opencontainers.image.description="Aplicación de encuesta sociopolítica"
 
-# Exponer el puerto en el que la aplicación escucha
+# Exponer y comprobar salud
 EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=5s \
+  CMD ["./radar", "health"]
 
-# Comando para ejecutar la aplicación
-CMD ["./main"]
+ENTRYPOINT ["./radar"]
