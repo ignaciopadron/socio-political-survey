@@ -446,11 +446,14 @@ func categoriesHandler(w http.ResponseWriter, r *http.Request) {
 
 // main (MODIFICADO: añadir nueva ruta)
 func main() {
-	// Servir archivos estáticos desde el directorio ../static bajo la ruta /static/
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.HandleFunc("/api/questions", questionsHandler)
+	http.HandleFunc("/api/submit", submitHandler)
+	http.HandleFunc("/api/categories", categoriesHandler)
 
-	// Servir index.html para la ruta raíz
+	// Servir archivos estáticos (CSS, JS, imágenes)
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
+
+	// Servir el HTML principal
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// Asegurarse de que solo se sirva para la ruta exacta "/"
 		if r.URL.Path != "/" {
@@ -463,10 +466,6 @@ func main() {
 		duration := time.Since(start)
 		fmt.Printf("DEBUG: ServeFile('/') tomó %v\n", duration)
 	})
-
-	http.HandleFunc("/api/questions", questionsHandler)
-	http.HandleFunc("/api/submit", submitHandler)
-	http.HandleFunc("/api/categories", categoriesHandler) // <-- AÑADIR NUEVA RUTA
 
 	port := "8080"
 	fmt.Printf("Servidor iniciado en http://localhost:%s\n", port)
