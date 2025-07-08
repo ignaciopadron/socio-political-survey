@@ -38,9 +38,9 @@ jobs:
             
             # 2. Descargar la última versión de la imagen desde Docker Hub
             # docker-compose pull solo descarga las imágenes que han cambiado.
-            docker-compose pull
+            docker compose pull
             
             # 3. Relanzar los servicios definidos en docker-compose.yml
             # Docker Compose es inteligente y solo reiniciará el contenedor 'radar_app'
             # si su imagen ('ciberegaliz/radar:latest') ha sido actualizada.
-            docker-compose up -d
+            docker compose up -d
