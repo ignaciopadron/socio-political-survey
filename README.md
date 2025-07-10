@@ -1,5 +1,11 @@
-# Brújula Sociopolítica 🧭
+# Brújula Sociopolítica 🧭 (Español)
 https://radar.ignaciopadron.es/
+
+## 🌐 Selecciona tu idioma / Select your language
+
+**🇪🇸 [Español](README.md)** | **🇺🇸 [English](README_EN.md)**
+
+---
 
 > Una aplicación web interactiva para descubrir tu orientación sociopolítica en los ejes Realismo/Idealismo y Soberanismo/Globalismo.
 
@@ -82,8 +88,6 @@ El backend expone los siguientes endpoints REST:
 ## 🤝 Contribuciones
 
 Las contribuciones son bienvenidas. Si encuentras un error o tienes una sugerencia, por favor abre un *issue* en el repositorio.
-
-
 
 ---
 
